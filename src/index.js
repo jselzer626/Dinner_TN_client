@@ -8,9 +8,11 @@ function square() {
 
 function board({ markSquare }) {
 
+    const [redIsNext, setNextColor] = useState(true)
+
     const handleClick = () => {
         e.preventDefault()
-        if ()
+        if
     }
 }
 
