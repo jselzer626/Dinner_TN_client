@@ -6,8 +6,12 @@ function square() {
 
 }
 
-function game() {
+function board({ markSquare }) {
 
+    const handleClick = () => {
+        e.preventDefault()
+        if ()
+    }
 }
 
 
@@ -15,8 +19,9 @@ function App() {
 
     const [gameBoard, setGameBoard] = useState(Array(49).fill(null))
 
-
-    const markSquare = index => 
-
+    const markSquare = (index, color) => {
+        const newGameBoard = [... gameBoard]
+        newGameBoard[index].color = color
+    }
 
 }
