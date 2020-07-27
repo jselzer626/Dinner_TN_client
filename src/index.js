@@ -3,25 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css'
 
 function Square({index, markSquare}) {
+
     return (
-        <button onClick={markSquare(index)}>
+        <button onClick={() => markSquare(index)}>
             {index}
         </button>
     )
 }
 
 
-
-
 function App() {
 
-    const [gameBoard, setGameBoard] = useState(Array(16).fill(null))
+    const [gameBoard, setGameBoard] = useState(Array(16).fill({color: null}))
     const [redIsNext, setRedIsNext] = useState(true)
     
-    const markSquare = (index) => {
-        const newGameBoard = [... gameBoard]
+
+    const markSquare = index => {
+        const newGameBoard = [...gameBoard]
         newGameBoard[index].color = redIsNext ? "red" : "black"
-        setRedIsNext(!redIsNext)
+        setGameBoard(newGameBoard)
     }
 
     return (
@@ -38,3 +38,10 @@ function App() {
     )
 
 }
+
+ReactDOM.render (
+    <div>
+        <App />
+    </div>,
+    document.querySelector("#root")
+)
