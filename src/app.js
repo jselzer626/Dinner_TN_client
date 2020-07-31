@@ -19,7 +19,7 @@ const InputForm = (props) => (
             </input>    
         </div>
 
-        <button className={'massive fluid positive ui button'} type='submit'>Search Recipes</button>
+        <button className={'massive fluid posigit ptive ui button'} type='submit'>Search Recipes</button>
     </form>
 
 )
@@ -81,7 +81,7 @@ function App() {
     }
 
     // twilio module to text this?
-    
+
 }
 
 export default App;
