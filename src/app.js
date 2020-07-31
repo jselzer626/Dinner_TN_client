@@ -7,6 +7,7 @@ function App() {
     const [input, setInput] = useState('')
     const [results, setResults] = useState([])
     const [resultIndex, setResultIndex] = useState(0)
+    const [noResults, setNoResults] = useState(false)
 
     const handleInputChange = e => {
         let newInput = input
@@ -27,8 +28,8 @@ function App() {
             let resultsJson = await fetchResults.json()
 
             if (resultsJson.length === 0)
-            return
-        
+                setNoResults(true)
+            
             setResults(resultsJson.results)
 
         } 
@@ -39,7 +40,8 @@ function App() {
     }
 
     const renderInputForm = results => {
-         if (results.length === 0) {
+         
+        if (results.length === 0 && noResults === false) {
              return (
                 <form className={'ui form'} onSubmit={handleSubmit}>
 
@@ -66,20 +68,8 @@ function App() {
         
         let currentRecipe = results[resultIndex] ? results[resultIndex] : null
 
-        if (!currentRecipe) {
-            return (
-                <div className="ui-container">
-                    <h1 className="ui header">Oops!</h1>
-                    <img className="ui image fluid" src={crying}></img>
-                    <h4>There's no more recipes matching your search</h4>
-                    <button 
-                        className={'massive fluid orange ui button'}
-                        onClick={() => setResults([])}
-                        >
-                            Try something else!</button>
-                </div>
-            )
-        }
+        if (!currentRecipe)
+            return
         
         return (
 
@@ -104,12 +94,36 @@ function App() {
         
     }
 
+    const noRecipesMessage = noResults => {
+
+        if (noResults == true) {
+
+            return (
+
+                <div className="ui-container">
+                        <h1 className="ui header">Oops!</h1>
+                        <img className="ui image fluid" src={crying}></img>
+                        <h4>There's no more recipes matching your search</h4>
+                        <button 
+                            className={'massive fluid orange ui button'}
+                            onClick={() => setNoResults(false)}
+                            >
+                                Try something else!</button>
+                </div>
+
+            )
+        }
+    }
+
+
+
     // twilio module to text this?
     return (
         <div className="App">
             <h1 className="ui-header">Dinner TN</h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
+            {noRecipesMessage(noResults)}
         </div>
     )
 
