@@ -11,8 +11,7 @@ function Square({index, markSquare}) {
     )
 }
 
-
-function App() {
+function Game() {
 
     const [gameBoard, setGameBoard] = useState(Array(16).fill({color: null}))
     const [redIsNext, setRedIsNext] = useState(true)
@@ -41,7 +40,7 @@ function App() {
 
 ReactDOM.render (
     <div>
-        <App />
+        <Game />
     </div>,
     document.querySelector("#root")
 )
