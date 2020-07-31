@@ -69,14 +69,19 @@ function App() {
         
         return (
 
-            <div>
-                
+            <div className="ui-container">
+                <h4>currentRecipe.title</h4>
+                <img src={`https://spoonacular.com/recipeImages/${result.id}-312x231.jpg`}></img>
+                <button>Text me this</button>
+                <button>Show me another</button>
             </div>
 
         )
         
     }
 
-
-
+    // twilio module to text this?
+    
 }
+
+export default App;
