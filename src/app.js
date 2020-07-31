@@ -1,42 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-
-require('dotenv').config()
-
-const InputForm = (props) => (
-
-    <form className={'ui form'} onSubmit={handleSubmit}>
-
-        <div className={'field'}>
-            <label>What are you in the mood for?</label>
-            <input 
-                type='text' 
-                name='recipe_keywords' 
-                required 
-                onChange={props.handleInputChange}
-                placeholder="Search keywords, ingredients, cuisines etc.">
-                
-            </input>    
-        </div>
-
-        <button className={'massive fluid posigit ptive ui button'} type='submit'>Search Recipes</button>
-    </form>
-
-)
+import burger from './images/burger.png'
 
 function App() {
-
+    
     const [input, setInput] = useState('')
     const [results, setResults] = useState([])
     const [resultIndex, setResultIndex] = useState(0)
 
     const handleInputChange = e => {
-        newInput = input
-        newInput += e.currentTarget.value
+        let newInput = input
+        newInput = e.currentTarget.value
         setInput(newInput)
     }
 
-    const searchKeywords = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
@@ -45,7 +22,7 @@ function App() {
                 return 
             setInput('')
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
-            informationinstructionsRequired=true&${process.env.spoonacular_key}`)
+            informationinstructionsRequired=true&${process.env.REACT_APP_RECIPE_API}`)
             let resultsJson = await fetchResults.json()
 
             if (resultsJson.length === 0)
@@ -60,7 +37,32 @@ function App() {
 
     }
 
-    const renderRecipe = () => {
+    const renderInputForm = results => {
+        console.log(process.env)
+         if (results.length === 0) {
+             return (
+                <form className={'ui form'} onSubmit={handleSubmit}>
+
+                    <div className={'field'}>
+                        <img src={burger}></img>
+                        <label>What are you in the mood for?</label>
+                        <input 
+                            type='text' 
+                            name='recipe_keywords' 
+                            required 
+                            onChange={handleInputChange}
+                            placeholder="Search keywords, ingredients, cuisines etc.">
+                            
+                        </input>    
+                    </div>
+        
+                    <button className={'massive fluid positive ui button'} type='submit'>Find something to eat!</button>
+                </form>
+             )
+         }
+    }
+
+    const renderRecipe = results => {
 
         let currentRecipe = results[resultIndex] ? results[resultIndex] : null
 
@@ -71,7 +73,7 @@ function App() {
 
             <div className="ui-container">
                 <h4>currentRecipe.title</h4>
-                <img src={`https://spoonacular.com/recipeImages/${result.id}-312x231.jpg`}></img>
+                <img src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
                 <button>Text me this</button>
                 <button>Show me another</button>
             </div>
@@ -81,6 +83,11 @@ function App() {
     }
 
     // twilio module to text this?
+    return (
+        <div className="App">
+            {renderInputForm(results)}
+        </div>
+    )
 
 }
 
