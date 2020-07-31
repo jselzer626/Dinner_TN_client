@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import burger from './images/burger.png'
+import crying from './images/crying.png'
 
 function App() {
     
@@ -14,15 +15,15 @@ function App() {
     }
 
     const handleSubmit = async (e) => {
+        
         e.preventDefault()
 
         try {
             let keywords = input
             if (!keywords)
                 return 
-            setInput('')
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
-            informationinstructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}`)
+            informationinstructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}&number=100`)
             let resultsJson = await fetchResults.json()
 
             if (resultsJson.length === 0)
@@ -62,11 +63,23 @@ function App() {
     }
 
     const renderRecipe = results => {
-
+        
         let currentRecipe = results[resultIndex] ? results[resultIndex] : null
 
-        if (!currentRecipe)
-            return
+        if (!currentRecipe) {
+            return (
+                <div className="ui-container">
+                    <h1 className="ui header">Oops!</h1>
+                    <img className="ui image fluid" src={crying}></img>
+                    <h4>There's no more recipes matching your search</h4>
+                    <button 
+                        className={'massive fluid orange ui button'}
+                        onClick={() => setResults([])}
+                        >
+                            Try something else!</button>
+                </div>
+            )
+        }
         
         return (
 
@@ -79,9 +92,11 @@ function App() {
                 <button 
                     className={'massive fluid negative ui button'}
                     onClick={() => {
+
                         let newIndex = resultIndex
-                        setResultIndex(newIndex += 1)
-                    }}
+                        setResultIndex(newIndex += 1)}
+
+                    }
                 >Show me another</button>
             </div>
 
@@ -92,7 +107,7 @@ function App() {
     // twilio module to text this?
     return (
         <div className="App">
-            <h1 class="ui-header">Dinner TN</h1>
+            <h1 className="ui-header">Dinner TN</h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
         </div>
