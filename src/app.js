@@ -22,7 +22,7 @@ function App() {
                 return 
             setInput('')
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
-            informationinstructionsRequired=true&${process.env.REACT_APP_RECIPE_API}`)
+            informationinstructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}`)
             let resultsJson = await fetchResults.json()
 
             if (resultsJson.length === 0)
@@ -38,13 +38,12 @@ function App() {
     }
 
     const renderInputForm = results => {
-        console.log(process.env)
          if (results.length === 0) {
              return (
                 <form className={'ui form'} onSubmit={handleSubmit}>
 
                     <div className={'field'}>
-                        <img src={burger}></img>
+                        <img className="ui image fluid" src={burger}></img>
                         <label>What are you in the mood for?</label>
                         <input 
                             type='text' 
@@ -56,7 +55,7 @@ function App() {
                         </input>    
                     </div>
         
-                    <button className={'massive fluid positive ui button'} type='submit'>Find something to eat!</button>
+                    <button className={'massive fluid orange ui button'} type='submit'>Find something to eat!</button>
                 </form>
              )
          }
@@ -72,10 +71,18 @@ function App() {
         return (
 
             <div className="ui-container">
-                <h4>currentRecipe.title</h4>
-                <img src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
-                <button>Text me this</button>
-                <button>Show me another</button>
+                <h4>{currentRecipe.title}</h4>
+                <img className={"ui image fluid"} src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
+                {<br/>}
+                <button className={'massive fluid positive ui button'}>Text me the recipe!</button>
+                {<br/>}
+                <button 
+                    className={'massive fluid negative ui button'}
+                    onClick={() => {
+                        let newIndex = resultIndex
+                        setResultIndex(newIndex += 1)
+                    }}
+                >Show me another</button>
             </div>
 
         )
@@ -85,7 +92,9 @@ function App() {
     // twilio module to text this?
     return (
         <div className="App">
+            <h1 class="ui-header">Dinner TN</h1>
             {renderInputForm(results)}
+            {renderRecipe(results)}
         </div>
     )
 
