@@ -25,13 +25,13 @@ function App() {
                 return 
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
             informationinstructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}&number=100`)
-            let resultsJson = await fetchResults.json()
-
-            if (resultsJson.length === 0)
-                setNoResults(true)
+            let resultsJson = await fetchResults.json()     
             
-            setResults(resultsJson.results)
+            // actual recipe recipes are in results key of response object
+            if (resultsJson.results.length === 0)
+                setNoResults(true)
 
+            setResults(resultsJson.results)
         } 
         catch(e) {
             console.warn(e)
@@ -41,7 +41,7 @@ function App() {
 
     const renderInputForm = results => {
          
-        if (results.length === 0 && noResults === false) {
+        if (results.length === 0 && !noResults) {
              return (
                 <form className={'ui form'} onSubmit={handleSubmit}>
 
@@ -68,8 +68,28 @@ function App() {
         
         let currentRecipe = results[resultIndex] ? results[resultIndex] : null
 
-        if (!currentRecipe)
+        // first checking if search returned no results
+        if (!currentRecipe && noResults) {
+            return (
+
+                <div className="ui-container">
+                        <h1 className="ui header">Oops!</h1>
+                        <img className="ui image fluid" src={crying}></img>
+                        <h4>There's no more recipes matching your search</h4>
+                        <button 
+                            className={'massive fluid orange ui button'}
+                            onClick={() => setNoResults(false)}
+                            >
+                                Try something else!</button>
+                </div>
+
+            )}
+        // then checking if application just loaded (i.e. noResults is still false)
+        else if (!currentRecipe) {
             return
+        }
+        
+        
         
         return (
 
@@ -94,28 +114,6 @@ function App() {
         
     }
 
-    const noRecipesMessage = noResults => {
-
-        if (noResults == true) {
-
-            return (
-
-                <div className="ui-container">
-                        <h1 className="ui header">Oops!</h1>
-                        <img className="ui image fluid" src={crying}></img>
-                        <h4>There's no more recipes matching your search</h4>
-                        <button 
-                            className={'massive fluid orange ui button'}
-                            onClick={() => setNoResults(false)}
-                            >
-                                Try something else!</button>
-                </div>
-
-            )
-        }
-    }
-
-
 
     // twilio module to text this?
     return (
@@ -123,7 +121,6 @@ function App() {
             <h1 className="ui-header">Dinner TN</h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
-            {noRecipesMessage(noResults)}
         </div>
     )
 
