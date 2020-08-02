@@ -47,7 +47,7 @@ function App() {
 
                     <div className={'field'}>
                         <img className="ui image fluid" src={burger}></img>
-                        <label>What are you in the mood for?</label>
+                        <h4>What are you in the mood for?</h4>
                         <input 
                             type='text' 
                             name='recipe_keywords' 
@@ -67,7 +67,6 @@ function App() {
     const renderRecipe = results => {
         
         let currentRecipe = results[resultIndex] ? results[resultIndex] : null
-
         // first checking if search returned no results
         if (!currentRecipe && noResults) {
             return (
@@ -75,12 +74,13 @@ function App() {
                 <div className="ui-container">
                         <h1 className="ui header">Oops!</h1>
                         <img className="ui image fluid" src={crying}></img>
-                        <h4>There's no more recipes matching your search</h4>
+                        <h4>No recipes matching "{input}"</h4>
                         <button 
                             className={'massive fluid orange ui button'}
                             onClick={() => setNoResults(false)}
                             >
                                 Try something else!</button>
+
                 </div>
 
             )}
@@ -108,6 +108,17 @@ function App() {
 
                     }
                 >Show me another</button>
+                <div className="newSearch">
+                    <p>You searched: <b>{input}</b></p>
+                    <button 
+                        className="ui button orange"
+                        onClick={() => {
+                            setResults([])
+                        }}
+                        >
+                        New Search
+                    </button>
+                </div>
             </div>
 
         )

@@ -1,0 +1,22 @@
+.App {
+    text-align: center;
+}
+
+h1 {
+    border-bottom: 1px solid lightgray;
+}
+
+.newSearch {
+   margin-top: 40px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   display: flex;
+   justify-content: space-evenly;
+   border-top: 1px solid lightgray;
+   border-bottom: 1px solid lightgray;
+}
+
+.newSearch p {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
