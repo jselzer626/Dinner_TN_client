@@ -11,11 +11,19 @@ function App() {
     const [noResults, setNoResults] = useState(false)
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
+    const [sendNumber, setSendNumber] = useState('')
+    const [sendSuccess, setSendSuccess] = useState(false)
 
     const handleInputChange = e => {
         let newInput = input
         newInput = e.currentTarget.value
         setInput(newInput)
+    }
+    
+    const handleNumberChange = e => {
+        let newNumber = sendNumber
+        newNumber = e.currentTarget.value
+        setSendNumber(newNumber)
     }
 
     const handleSubmit = async (e) => {
@@ -57,6 +65,37 @@ function App() {
                 return
             
             setRecipeDetails(resultsJson)
+
+        } catch(e) {
+            console.warn(e)
+        }
+    }
+
+    const handleRecipeSend = async (e) => {
+         
+        e.preventDefault()
+
+        //cleaning extended ingredients into concise readable string
+        let ingredients = ''
+
+
+        if (recipeDetails.extendedIngredients) {
+            recipeDetails.extendedIngredients.forEach(item => {
+            ingredients += item.originalString += '\n'
+            })
+        }
+
+        try {
+            let fetchResults = await fetch('http://localhost:5000/', {
+                method: 'POST',
+                body: `number=${sendNumber}&recipe=${recipeDetails.instructions}&ingredients=${ingredients}`
+            })
+            
+            let resultsJson = await fetchResults.json()
+
+            if (resultsJson === "queued") {
+                setSendSuccess(true)
+            }
 
         } catch(e) {
             console.warn(e)
@@ -156,25 +195,19 @@ function App() {
     }
 
     const sendRecipeSMS = SMSFormOpen => {
-        
-        //cleaning extended ingredients into concise readable string
-        let ingredients = ''
+
         let imageURL
 
-        if (recipeDetails.extendedIngredients) {
-            recipeDetails.extendedIngredients.forEach(item => {
-            ingredients += item.originalString += '\n'
-            })
+        if (recipeDetails)
             imageURL = recipeDetails.image
-        }
-
+        
         return (
             <Modal
                 open={SMSFormOpen}
                 onClose={() => setSMSFormOpen(false)}
                 >
                 <Modal.Header>Get this via text</Modal.Header>
-                <form action="https://dinner-tn-server.herokuapp.com/" method="POST">
+                <form onSubmit={handleRecipeSend}>
                 <Modal.Content>
                 <Image size='small' src={imageURL} wrapped />
                 <p>You will receive two messages, one containing ingredients and one containing directions.</p>
@@ -182,21 +215,8 @@ function App() {
                         type="text"
                         name="number"
                         required
+                        onChange={handleNumberChange}
                     ></input>
-                    <input
-                        hidden
-                        readOnly
-                        value={ingredients ? ingredients : 'test'}
-                        name="ingredients"
-                    >
-                    </input>
-                    <input
-                        hidden
-                        readOnly
-                        value={recipeDetails.instructions ? recipeDetails.instructions : 'test'}
-                        name="recipe"
-                    >
-                    </input>
                 </Modal.Content>
                 <Modal.Actions>
                     <button className="ui button positive" type="submit">Send me this</button>
