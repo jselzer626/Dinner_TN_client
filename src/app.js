@@ -63,6 +63,7 @@ function App() {
         }
     }
 
+
     const renderInputForm = results => {
          
         if (results.length === 0 && !noResults) {
@@ -173,34 +174,35 @@ function App() {
                 onClose={() => setSMSFormOpen(false)}
                 >
                 <Modal.Header>Get this via text</Modal.Header>
+                <form action="https://dinner-tn-server.herokuapp.com/" method="POST">
                 <Modal.Content>
                 <Image size='small' src={imageURL} wrapped />
-                    <Modal.Description>
-                        <p>You will receive two messages, one containing ingredients and one containing directions.</p>
-                        <form>
-                            <input
-                                type="text"
-                                name="number"
-                                required
-                            ></input>
-                            <input
-                                hidden
-                                value={ingredients}
-                                name="ingredients"
-                            >
-                            </input>
-                            <input
-                                hidden
-                                value={recipeDetails.instructions}
-                                name="recipe"
-                            >
-                            </input>
-                        </form>
-                    </Modal.Description>
+                <p>You will receive two messages, one containing ingredients and one containing directions.</p>
+                    <input
+                        type="text"
+                        name="number"
+                        required
+                    ></input>
+                    <input
+                        hidden
+                        readOnly
+                        value={ingredients ? ingredients : 'test'}
+                        name="ingredients"
+                    >
+                    </input>
+                    <input
+                        hidden
+                        readOnly
+                        value={recipeDetails.instructions ? recipeDetails.instructions : 'test'}
+                        name="recipe"
+                    >
+                    </input>
                 </Modal.Content>
                 <Modal.Actions>
-                    <button className="orange" type="submit"></button>
+                    <button className="ui button positive" type="submit">Send me this</button>
+                    <button className="ui button negative" onClick={() => setSMSFormOpen('false')}>Take me back</button>
                 </Modal.Actions>
+                </form>
             </Modal>
         )
     }
