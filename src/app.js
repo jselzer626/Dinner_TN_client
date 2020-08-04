@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal } from 'semantic-ui-react'
+import { Modal, Image } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
 
@@ -42,29 +42,26 @@ function App() {
 
     }
 
-    /*const handleRecipeSelection = async (recipeId) => (e) => {
+    const handleRecipeSelection = async (e, recipeId) => {
 
         e.preventDefault()
 
         try {
-            if (!recipeId)
-                return
+
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?
-            includeNutrition=false`)
+            includeNutrition=false&apiKey=${process.env.REACT_APP_RECIPE_API}`)
 
             let resultsJson = await fetchResults.json()
 
             if (resultsJson.length === 0)
                 return
             
-            setRecipeDetails()
-
-
+            setRecipeDetails(resultsJson)
 
         } catch(e) {
             console.warn(e)
         }
-    }*/
+    }
 
     const renderInputForm = results => {
          
@@ -125,7 +122,10 @@ function App() {
                 {<br/>}
                 <button 
                     className={'massive fluid positive ui button'}
-                    onClick={() => setSMSFormOpen(true)}
+                    onClick={(e) => {
+                        handleRecipeSelection(e, currentRecipe.id)
+                        setSMSFormOpen(true)
+                    }}
                     >Text me the recipe!
                     </button>
                 {<br/>}
@@ -156,20 +156,51 @@ function App() {
 
     const sendRecipeSMS = SMSFormOpen => {
         
-        let currentRecipe = results[resultIndex] 
+        //cleaning extended ingredients into concise readable string
+        let ingredients = ''
+        let imageURL
 
-
-
+        if (recipeDetails.extendedIngredients) {
+            recipeDetails.extendedIngredients.forEach(item => {
+            ingredients += item.originalString += '\n'
+            })
+            imageURL = recipeDetails.image
+        }
 
         return (
             <Modal
                 open={SMSFormOpen}
                 onClose={() => setSMSFormOpen(false)}
                 >
-                <Modal.Header>Text me the recipe</Modal.Header>
+                <Modal.Header>Get this via text</Modal.Header>
                 <Modal.Content>
-                test
+                <Image size='small' src={imageURL} wrapped />
+                    <Modal.Description>
+                        <p>You will receive two messages, one containing ingredients and one containing directions.</p>
+                        <form>
+                            <input
+                                type="text"
+                                name="number"
+                                required
+                            ></input>
+                            <input
+                                hidden
+                                value={ingredients}
+                                name="ingredients"
+                            >
+                            </input>
+                            <input
+                                hidden
+                                value={recipeDetails.instructions}
+                                name="recipe"
+                            >
+                            </input>
+                        </form>
+                    </Modal.Description>
                 </Modal.Content>
+                <Modal.Actions>
+                    <button className="orange" type="submit"></button>
+                </Modal.Actions>
             </Modal>
         )
     }
