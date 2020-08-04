@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import { Modal } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
 
@@ -8,6 +9,8 @@ function App() {
     const [results, setResults] = useState([])
     const [resultIndex, setResultIndex] = useState(0)
     const [noResults, setNoResults] = useState(false)
+    const [SMSFormOpen, setSMSFormOpen] = useState(false)
+    const [recipeDetails, setRecipeDetails] = useState({})
 
     const handleInputChange = e => {
         let newInput = input
@@ -24,7 +27,7 @@ function App() {
             if (!keywords)
                 return 
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
-            informationinstructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}&number=100`)
+            instructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}&number=100`)
             let resultsJson = await fetchResults.json()     
             
             // actual recipe recipes are in results key of response object
@@ -38,6 +41,30 @@ function App() {
         }
 
     }
+
+    /*const handleRecipeSelection = async (recipeId) => (e) => {
+
+        e.preventDefault()
+
+        try {
+            if (!recipeId)
+                return
+            let fetchResults = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?
+            includeNutrition=false`)
+
+            let resultsJson = await fetchResults.json()
+
+            if (resultsJson.length === 0)
+                return
+            
+            setRecipeDetails()
+
+
+
+        } catch(e) {
+            console.warn(e)
+        }
+    }*/
 
     const renderInputForm = results => {
          
@@ -63,6 +90,7 @@ function App() {
              )
          }
     }
+    
 
     const renderRecipe = results => {
         
@@ -89,15 +117,17 @@ function App() {
             return
         }
         
-        
-        
         return (
 
             <div className="ui-container">
                 <h4>{currentRecipe.title}</h4>
                 <img className={"ui image fluid"} src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
                 {<br/>}
-                <button className={'massive fluid positive ui button'}>Text me the recipe!</button>
+                <button 
+                    className={'massive fluid positive ui button'}
+                    onClick={() => setSMSFormOpen(true)}
+                    >Text me the recipe!
+                    </button>
                 {<br/>}
                 <button 
                     className={'massive fluid negative ui button'}
@@ -115,8 +145,7 @@ function App() {
                         onClick={() => {
                             setResults([])
                         }}
-                        >
-                        New Search
+                        >New Search
                     </button>
                 </div>
             </div>
@@ -125,13 +154,32 @@ function App() {
         
     }
 
+    const sendRecipeSMS = SMSFormOpen => {
+        
+        let currentRecipe = results[resultIndex] 
 
-    // twilio module to text this?
+
+
+
+        return (
+            <Modal
+                open={SMSFormOpen}
+                onClose={() => setSMSFormOpen(false)}
+                >
+                <Modal.Header>Text me the recipe</Modal.Header>
+                <Modal.Content>
+                test
+                </Modal.Content>
+            </Modal>
+        )
+    }
+
     return (
         <div className="App">
             <h1 className="ui-header">Dinner TN</h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
+            {sendRecipeSMS(SMSFormOpen)}
         </div>
     )
 
