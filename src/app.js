@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Modal, Image } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
+import success_check from './images/success_check.png'
 
 function App() {
     
@@ -97,10 +98,9 @@ function App() {
                 body: SMSForm
             })
 
-            if (fetchResults.ok)
-                console.log('here')
-            
+
             let resultsJson = await fetchResults.json()
+            
 
             if (resultsJson === "queued") {
                 setSendSuccess(true)
@@ -193,6 +193,7 @@ function App() {
                         className="ui button orange"
                         onClick={() => {
                             setResults([])
+                            setResultIndex(0)
                         }}
                         >New Search
                     </button>
@@ -210,16 +211,39 @@ function App() {
         if (recipeDetails)
             imageURL = recipeDetails.image
         
+            if (sendSuccess) {
+            return (
+            <Modal>
+                <Modal.Header>Success - message sent!</Modal.Header>
+                <Modal.Content>
+                    <Image src={success_check} size="small"></Image>
+                    <p>Bon Appetit!</p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <button className="ui button orange massive fluid" onClick={() => {
+                        //noResults can stay false
+                        setResults([])
+                        setResultIndex(0)
+                        setSendSuccess(false)
+                        setSMSFormOpen(false)
+                        setSendNumber('')
+                }}>Back</button>
+                </Modal.Actions>
+            </Modal>)}
+
         return (
             <Modal
                 open={SMSFormOpen}
                 onClose={() => setSMSFormOpen(false)}
                 >
-                <Modal.Header>Get this via text</Modal.Header>
+                <Modal.Header>Text me {recipeDetails.title}</Modal.Header>
                 <form onSubmit={handleRecipeSend}>
                 <Modal.Content>
+                    {<br/>}
                 <Image size='small' src={imageURL} wrapped />
-                <p>You will receive two messages, one containing ingredients and one containing directions.</p>
+                <p>You will receive a text containing instructions and ingredients</p>
+                    <label>Phone Number</label>
+                    {<br/>}
                     <input
                         type="text"
                         name="number"
@@ -229,7 +253,7 @@ function App() {
                 </Modal.Content>
                 <Modal.Actions>
                     <button className="ui button positive" type="submit">Send me this</button>
-                    <button className="ui button negative" onClick={() => setSMSFormOpen('false')}>Take me back</button>
+                    <button className="ui button negative" onClick={() => setSMSFormOpen(false)}>Take me back</button>
                 </Modal.Actions>
                 </form>
             </Modal>
