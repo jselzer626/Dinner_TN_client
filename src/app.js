@@ -6,26 +6,21 @@ import success_check from './images/success_check.png'
 
 function App() {
     
-    const [input, setInput] = useState('')
+    const [input, setInput] = useState({search:'', number:''})
     const [results, setResults] = useState([])
     const [resultIndex, setResultIndex] = useState(0)
     const [noResults, setNoResults] = useState(false)
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
-    const [sendNumber, setSendNumber] = useState('')
-    const [sendSuccess, setSendSuccess] = useState(false)
+    const [sendStatus, setSendStatus] = useState({sent:false, success:false})
 
     // need to consolidate these two functions
     const handleInputChange = e => {
-        let newInput = input
-        newInput = e.currentTarget.value
-        setInput(newInput)
+        setInput({...input,search:e.currentTarget.value})
     }
     
     const handleNumberChange = e => {
-        let newNumber = sendNumber
-        newNumber = e.currentTarget.value
-        setSendNumber(newNumber)
+        setInput({...input,number:e.currentTarget.value})
     }
 
     const handleSubmit = async (e) => {
@@ -33,7 +28,7 @@ function App() {
         e.preventDefault()
 
         try {
-            let keywords = input
+            let keywords = input.search
             if (!keywords)
                 return 
             let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
@@ -80,7 +75,6 @@ function App() {
         // clean up ingredients list
         let ingredientsClean = ''
 
-
         if (recipeDetails.extendedIngredients) {
             recipeDetails.extendedIngredients.forEach(item => {
             ingredientsClean += item.originalString += '\n'
@@ -89,7 +83,7 @@ function App() {
 
         try {
             let SMSForm = new FormData()
-            SMSForm.append('number', sendNumber)
+            SMSForm.append('number', input.number)
             SMSForm.append('ingredients', ingredientsClean)
             SMSForm.append('recipe', recipeDetails.instructions)
 
@@ -98,13 +92,10 @@ function App() {
                 body: SMSForm
             })
 
+            setSendStatus({...sendStatus,sent:true})
 
-            let resultsJson = await fetchResults.json()
-            
-
-            if (resultsJson === "queued") {
-                setSendSuccess(true)
-            }
+            if (fetchResults.ok)
+                setSendStatus({...sendStatus,success:true})
 
         } catch(e) {
             console.warn(e)
@@ -148,7 +139,7 @@ function App() {
                 <div className="ui-container">
                         <h1 className="ui header">Oops!</h1>
                         <img className="ui image fluid" src={crying}></img>
-                        <h4>No recipes matching "{input}"</h4>
+                        <h4>No recipes matching "{input.search}"</h4>
                         <button 
                             className={'massive fluid orange ui button'}
                             onClick={() => setNoResults(false)}
@@ -188,7 +179,7 @@ function App() {
                     }
                 >Show me another</button>
                 <div className="newSearch">
-                    <p>You searched: <b>{input}</b></p>
+                    <p>You searched: <b>{input.search}</b></p>
                     <button 
                         className="ui button orange"
                         onClick={() => {
@@ -209,27 +200,44 @@ function App() {
         let imageURL
 
         if (recipeDetails)
-            imageURL = recipeDetails.image
-        
-            if (sendSuccess) {
-            return (
-            <Modal>
-                <Modal.Header>Success - message sent!</Modal.Header>
-                <Modal.Content>
-                    <Image src={success_check} size="small"></Image>
-                    <p>Bon Appetit!</p>
-                </Modal.Content>
-                <Modal.Actions>
-                    <button className="ui button orange massive fluid" onClick={() => {
-                        //noResults can stay false
-                        setResults([])
-                        setResultIndex(0)
-                        setSendSuccess(false)
-                        setSMSFormOpen(false)
-                        setSendNumber('')
-                }}>Back</button>
-                </Modal.Actions>
-            </Modal>)}
+            
+        imageURL = recipeDetails.image
+            
+            let resetButton = <button className="ui button orange massive fluid" onClick={() => {
+                //noResults can stay false
+                setResults([])
+                setResultIndex(0)
+                setSendStatus({sent:false, success:false})
+                setSMSFormOpen(false)
+                setInput({search:'', number:''})
+            }}>Back</button>
+
+            // outcome handling after message send
+            if (sendStatus.success) {
+                return (
+                    <Modal>
+                        <Modal.Header>Success - message sent!</Modal.Header>
+                        <Modal.Content>
+                            <Image src={success_check} size="small"></Image>
+                            <p>Bon Appetit!</p>
+                        </Modal.Content>
+                        <Modal.Actions>
+                            {resetButton}
+                        </Modal.Actions>
+                    </Modal>)
+            } else if (sendStatus.sent && !sendStatus.success) {
+                return (
+                    <Modal>
+                        <Modal.Header>Oops - Message Error</Modal.Header>
+                        <Modal.Content>
+                            <Image src={crying} size="small"></Image>
+                            <p>Something didn't work. Please try again!</p>
+                        </Modal.Content>
+                        <Modal.Actions>
+                            {resetButton}
+                        </Modal.Actions>
+                    </Modal>)
+            }
 
         return (
             <Modal
@@ -249,6 +257,8 @@ function App() {
                         name="number"
                         required
                         onChange={handleNumberChange}
+                        minLength='10'
+                        maxLength='10'
                     ></input>
                 </Modal.Content>
                 <Modal.Actions>
