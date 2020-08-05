@@ -14,6 +14,7 @@ function App() {
     const [sendNumber, setSendNumber] = useState('')
     const [sendSuccess, setSendSuccess] = useState(false)
 
+    // need to consolidate these two functions
     const handleInputChange = e => {
         let newInput = input
         newInput = e.currentTarget.value
@@ -75,21 +76,29 @@ function App() {
          
         e.preventDefault()
 
-        //cleaning extended ingredients into concise readable string
-        let ingredients = ''
+        // clean up ingredients list
+        let ingredientsClean = ''
 
 
         if (recipeDetails.extendedIngredients) {
             recipeDetails.extendedIngredients.forEach(item => {
-            ingredients += item.originalString += '\n'
+            ingredientsClean += item.originalString += '\n'
             })
         }
 
         try {
+            let SMSForm = new FormData()
+            SMSForm.append('number', sendNumber)
+            SMSForm.append('ingredients', ingredientsClean)
+            SMSForm.append('recipe', recipeDetails.instructions)
+
             let fetchResults = await fetch('http://localhost:5000/', {
                 method: 'POST',
-                body: `number=${sendNumber}&recipe=${recipeDetails.instructions}&ingredients=${ingredients}`
+                body: SMSForm
             })
+
+            if (fetchResults.ok)
+                console.log('here')
             
             let resultsJson = await fetchResults.json()
 
