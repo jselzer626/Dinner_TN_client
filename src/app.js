@@ -132,9 +132,6 @@ function App() {
                     </div>
         
                     <button className={'massive fluid orange ui button'} type='submit'>Find something to eat!</button>
-                    <div>
-                        <a href="#" onClick={() => setShowAbout(true)}>About</a>
-                    </div>
                 </form>
              )
          }
@@ -255,9 +252,9 @@ function App() {
                 open={SMSFormOpen}
                 onClose={() => setSMSFormOpen(false)}
                 >
-                <Modal.Header>Text Me {recipeDetails.title}</Modal.Header>
+                <Modal.Header>Text Me Recipe For {recipeDetails.title}</Modal.Header>
                 <form onSubmit={handleRecipeSend}>
-                <Modal.Content>
+                <Modal.Content id="msgSendForm">
                     {<br/>}
                 <Image size='small' src={imageURL} wrapped />
                 <p>You will receive a text containing instructions and ingredients</p>
@@ -272,7 +269,7 @@ function App() {
                         maxLength='10'
                     ></input>
                 </Modal.Content>
-                <Modal.Actions>
+                <Modal.Actions id="msgOptions">
                     <button className="ui button positive" type="submit">Send me this</button>
                     <button className="ui button negative" onClick={() => setSMSFormOpen(false)}>Take me back</button>
                 </Modal.Actions>
@@ -292,26 +289,24 @@ function App() {
                     No More Recipe Blogs!
                 </Modal.Header>
                 <Modal.Content>
-                    Ever tried to quickly look up recipes and then got lost in a sea of cooking photos, ads and paragraphs
+                    Ever tried look up a recipe and gotten lost in a sea of cooking photos, ads and paragraphs
                     about some blogger's life story as it relates to lasagna?
-                    {<br/>}
-                    Dinner TN finds you a bunch of recipes, you pick one and then we send a text with ingredients and directions.
-                    That's it. Just plain text of what you need to know to actually make the dish.
-                    {<br/>}
-                    You can search anything that might relate to food. Ingredients, styles, cuisine nationalities, flavors and more.
-                    We're connected to a database of over 350,000 recipes (courtesy of Spoonacular) so I bet you can probably
+                    {<br/>}{<br/>}
+                    Enter Dinner TN. We find you a bunch of recipes, you pick one and we text you ingredients and directions.
+                    {<br/>}{<br/>}
+                    That's it. 
+                    {<br/>}{<br/>}
+                    Just plain text of what you need to know to actually make the dish.
+                    {<br/>}{<br/>}
+                    You can search anything that relates to food. Ingredients, styles, cuisines, flavors etc.
+                    We're connected to a database of over 350,000 recipes (courtesy of <a href="https://www.spoonacular.com/" target="blank">Spoonacular</a>) so I bet you can probably
                     find something.
-                    {<br/>}
-                    Oh, and our messaging is totally secure. We use Twilio to process and send all correspondence. You can learn more about What
-                    they do <a href="https://www.twilio.com/" target="blank">here.</a>
-                    {<br/>}
-                    Anyways, go and try it out. Type anything you want. I tried "chocolate enchiladas strawberries cheese" the other day.
-                    {<br/>}
+                    {<br/>}{<br/>}
+                    Oh, and our messaging is totally secure. We use Twilio to process and send all correspondence. Learn more about them <a href="https://www.twilio.com/" target="blank">here.</a>
+                    {<br/>}{<br/>}
+                    Anyways, go and try it out.
+                    {<br/>}{<br/>}
                     Bon Appetit!
-                    <div className="aboutImages">
-                        <img className="ui image small" src={spoonacular}/>
-                        <img className="ui image small" src={twilio}/>
-                    </div>
                 </Modal.Content>
                 <Modal.Actions>
                 <button className="ui large fluid button negative" onClick={() => setShowAbout(false)}>Take me back</button>
@@ -323,11 +318,15 @@ function App() {
 
     return (
         <div className="App">
-            <h1 className="ui-header mainHeader"><img className="headerImg" src={turkey}></img>Dinner TN<img className="headerImg" src={turkey}></img></h1>
+            <h1 className="ui-header mainHeader">Dinner TN</h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
             {sendRecipeSMS(SMSFormOpen)}
             {renderAboutSection(showAbout)}
+            <div className="About">
+                <p>&copy; Jon Selzer 2020</p>
+                <a href="#" onClick={() => setShowAbout(true)}>About</a>
+            </div>
         </div>
     )
 

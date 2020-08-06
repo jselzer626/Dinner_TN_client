@@ -9,11 +9,11 @@ input {
 .mainHeader {
     border-bottom: 1px solid lightgray;
     padding: 20px;
-    background-color: #21ba45;
+    background-color: darkslategray;
     color: white;
     font-family: "Tahoma";
     display: flex;
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid silver;
     align-items: center;
     justify-content: center;
 }
@@ -32,7 +32,9 @@ input {
    display: flex;
    justify-content: space-evenly;
    border-top: 1px solid lightgray;
-   border-bottom: 1px solid lightgray;
+   position: absolute;
+   bottom: 35px;
+   width: 100%;
 }
 
 .newSearch p {
@@ -44,7 +46,7 @@ div.ui.modal.transition.visible.active {
     text-align: center;
 }
 
-div.content {
+#msgSendForm {
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid gray;
@@ -67,4 +69,31 @@ div.content {
     display: flex;
     justify-content: space-evenly;
     height: 100px;
+}
+
+.About {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    border-top: 1px solid silver;
+    /*padding-top: 10px;
+    margin-top: 40px;*/
+    align-items: left;
+    width: 100%;
+}
+
+.About p {
+    margin-left: 5px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+
+.ui.modal.transition.visible.active button {
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+
+#msgOptions {
+    display: flex;
+    justify-content: space-evenly;
 }
