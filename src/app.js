@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Modal, Image } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
+import turkey from './images/turkey.png'
 import success_check from './images/success_check.png'
 
 function App() {
@@ -115,7 +116,7 @@ function App() {
 
                     <div className={'field'}>
                         <img className="ui image fluid" src={burger}></img>
-                        <h4>What are you in the mood for?</h4>
+                        <h2>What are you in the mood for?</h2>
                         <input 
                             type='text' 
                             name='recipe_keywords' 
@@ -142,7 +143,7 @@ function App() {
 
                 <div className="ui-container">
                         <h1 className="ui header">Oops!</h1>
-                        <img className="ui image fluid" src={crying}></img>
+                        <img className="medium fluid" src={crying}></img>
                         <h4>No recipes matching "{input.search}"</h4>
                         <button 
                             className={'massive fluid orange ui button'}
@@ -161,7 +162,7 @@ function App() {
         return (
 
             <div className="ui-container">
-                <h4>{currentRecipe.title}</h4>
+                <h2>{currentRecipe.title}</h2>
                 <img className={"ui image fluid"} src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
                 {<br/>}
                 <button 
@@ -276,7 +277,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1 className="ui-header">Dinner TN</h1>
+            <h1 className="ui-header"><img className="headerImg" src={turkey}></img>Dinner TN<img className="headerImg" src={turkey}></img></h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
             {sendRecipeSMS(SMSFormOpen)}
