@@ -12,7 +12,7 @@ function App() {
     const [noResults, setNoResults] = useState(false)
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
-    const [sendStatus, setSendStatus] = useState({sent:false, success:false})
+    const [sendStatus, setSendStatus] = useState({sent:false, success:false, serverError:false})
 
     // need to consolidate these two functions
     const handleInputChange = e => {
@@ -93,11 +93,15 @@ function App() {
             })
 
             setSendStatus({...sendStatus,sent:true})
+            
+            let resultsJson = await fetchResults.json() 
 
-            if (fetchResults.ok)
+
+            if (resultsJson)
                 setSendStatus({...sendStatus,success:true})
 
         } catch(e) {
+            setSendStatus({...sendStatus,serverError:true})
             console.warn(e)
         }
     }
@@ -225,7 +229,7 @@ function App() {
                             {resetButton}
                         </Modal.Actions>
                     </Modal>)
-            } else if (sendStatus.sent && !sendStatus.success) {
+            } else if (sendStatus.sent && !sendStatus.success || sendStatus.serverError) {
                 return (
                     <Modal>
                         <Modal.Header>Oops - Message Error</Modal.Header>
