@@ -3,6 +3,8 @@ import { Modal, Image } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
 import turkey from './images/turkey.png'
+import spoonacular from './images/Spoonacular.png'
+import twilio from './images/twilio.png'
 import success_check from './images/success_check.png'
 
 function App() {
@@ -14,6 +16,7 @@ function App() {
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
     const [sendStatus, setSendStatus] = useState({sent:false, success:false, serverError:false})
+    const [showAbout, setShowAbout] = useState(false)
 
     // need to consolidate these two functions
     const handleInputChange = e => {
@@ -114,8 +117,9 @@ function App() {
              return (
                 <form className={'ui form'} onSubmit={handleSubmit}>
 
+             <h3>Find a recipe. Get it texted to you.{<br/>}No ads. No blogs. No stress.</h3>
                     <div className={'field'}>
-                        <img className="ui image fluid" src={burger}></img>
+                        <img className="ui image fluid startImg" src={burger}></img>
                         <h2>What are you in the mood for?</h2>
                         <input 
                             type='text' 
@@ -128,6 +132,9 @@ function App() {
                     </div>
         
                     <button className={'massive fluid orange ui button'} type='submit'>Find something to eat!</button>
+                    <div>
+                        <a href="#" onClick={() => setShowAbout(true)}>About</a>
+                    </div>
                 </form>
              )
          }
@@ -143,8 +150,8 @@ function App() {
 
                 <div className="ui-container">
                         <h1 className="ui header">Oops!</h1>
-                        <img className="medium fluid" src={crying}></img>
-                        <h4>No recipes matching "{input.search}"</h4>
+                        <img className="ui image fluid" src={crying}></img>
+                        <h2>No recipes matching "{input.search}"</h2>
                         <button 
                             className={'massive fluid orange ui button'}
                             onClick={() => setNoResults(false)}
@@ -205,8 +212,7 @@ function App() {
         let imageURL
 
         if (recipeDetails)
-            
-        imageURL = recipeDetails.image
+            imageURL = recipeDetails.image
             
             let resetButton = <button className="ui button orange massive fluid" onClick={() => {
                 //noResults can stay false
@@ -249,7 +255,7 @@ function App() {
                 open={SMSFormOpen}
                 onClose={() => setSMSFormOpen(false)}
                 >
-                <Modal.Header>Text me {recipeDetails.title}</Modal.Header>
+                <Modal.Header>Text Me {recipeDetails.title}</Modal.Header>
                 <form onSubmit={handleRecipeSend}>
                 <Modal.Content>
                     {<br/>}
@@ -275,12 +281,53 @@ function App() {
         )
     }
 
+    const renderAboutSection = showAbout => {
+
+        return (
+            <Modal
+                open={showAbout}
+                onClose={() => setShowAbout(false)}
+            >
+                <Modal.Header>
+                    No More Recipe Blogs!
+                </Modal.Header>
+                <Modal.Content>
+                    Ever tried to quickly look up recipes and then got lost in a sea of cooking photos, ads and paragraphs
+                    about some blogger's life story as it relates to lasagna?
+                    {<br/>}
+                    Dinner TN finds you a bunch of recipes, you pick one and then we send a text with ingredients and directions.
+                    That's it. Just plain text of what you need to know to actually make the dish.
+                    {<br/>}
+                    You can search anything that might relate to food. Ingredients, styles, cuisine nationalities, flavors and more.
+                    We're connected to a database of over 350,000 recipes (courtesy of Spoonacular) so I bet you can probably
+                    find something.
+                    {<br/>}
+                    Oh, and our messaging is totally secure. We use Twilio to process and send all correspondence. You can learn more about What
+                    they do <a href="https://www.twilio.com/" target="blank">here.</a>
+                    {<br/>}
+                    Anyways, go and try it out. Type anything you want. I tried "chocolate enchiladas strawberries cheese" the other day.
+                    {<br/>}
+                    Bon Appetit!
+                    <div className="aboutImages">
+                        <img className="ui image small" src={spoonacular}/>
+                        <img className="ui image small" src={twilio}/>
+                    </div>
+                </Modal.Content>
+                <Modal.Actions>
+                <button className="ui large fluid button negative" onClick={() => setShowAbout(false)}>Take me back</button>
+                </Modal.Actions>
+        
+            </Modal>
+        )
+    }
+
     return (
         <div className="App">
-            <h1 className="ui-header"><img className="headerImg" src={turkey}></img>Dinner TN<img className="headerImg" src={turkey}></img></h1>
+            <h1 className="ui-header mainHeader"><img className="headerImg" src={turkey}></img>Dinner TN<img className="headerImg" src={turkey}></img></h1>
             {renderInputForm(results)}
             {renderRecipe(results)}
             {sendRecipeSMS(SMSFormOpen)}
+            {renderAboutSection(showAbout)}
         </div>
     )
 
