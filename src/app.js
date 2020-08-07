@@ -3,8 +3,6 @@ import { Modal, Image } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
 import turkey from './images/turkey.png'
-import spoonacular from './images/Spoonacular.png'
-import twilio from './images/twilio.png'
 import success_check from './images/success_check.png'
 
 function App() {
@@ -15,7 +13,7 @@ function App() {
     const [noResults, setNoResults] = useState(false)
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
-    const [sendStatus, setSendStatus] = useState({sent:false, success:false, serverError:false})
+    const [sendStatus, setSendStatus] = useState({sending:false, sent:false, success:false, serverError:false})
     const [showDetails, setShowDetails] = useState({showAbout: false, showSource: false})
 
     // need to consolidate these two functions
@@ -76,6 +74,8 @@ function App() {
          
         e.preventDefault()
 
+        setSendStatus({...sendStatus,sending:true})
+
         // clean up ingredients list
         let ingredientsClean = ''
 
@@ -96,16 +96,17 @@ function App() {
                 body: SMSForm
             })
 
-            setSendStatus({...sendStatus,sent:true})
+            setSendStatus({...sendStatus,sent:true,sending:false})
             
             let resultsJson = await fetchResults.json() 
 
 
-            if (resultsJson)
+            if (resultsJson) 
                 setSendStatus({...sendStatus,success:true})
 
+
         } catch(e) {
-            setSendStatus({...sendStatus,serverError:true})
+            setSendStatus({...sendStatus,serverError:true,sending:false})
             console.warn(e)
         }
     }
@@ -221,7 +222,21 @@ function App() {
             }}>Back</button>
 
             // outcome handling after message send
-            if (sendStatus.success) {
+            if (sendStatus.sending) {
+                return (
+                    <Modal style={{height: "275px"}}>
+                        <Modal.Header
+                            style={{marginBottom: "50px"}}
+                            >Sending</Modal.Header>
+                        <Modal.Content>
+                            <img 
+                                className="ui image small rotate" 
+                                src={turkey}
+                            />
+                        </Modal.Content>
+                    </Modal>
+                )
+            } else if (sendStatus.success) {
                 return (
                     <Modal>
                         <Modal.Header>Success - message sent!</Modal.Header>
