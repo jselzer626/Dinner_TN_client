@@ -253,21 +253,36 @@ function App() {
                 onClose={() => setSMSFormOpen(false)}
                 >
                 <Modal.Header>Text Me Recipe For {recipeDetails.title}</Modal.Header>
-                <form onSubmit={handleRecipeSend}>
+                <form onSubmit={handleRecipeSend} className={'ui form'}>
                 <Modal.Content id="msgSendForm">
                     {<br/>}
-                <Image size='small' src={imageURL} wrapped />
-                <p>You will receive a text containing instructions and ingredients</p>
-                    <label>Phone Number</label>
+                    <div className='SMSFormDetails'>
+                        <Image size='small' src={imageURL}/>
+                        <p>You will receive a text containing instructions and ingredients</p>
+                    </div>
+                    <div className="ui accordion">
+                            <div className="active title">
+                                <i className="dropdown icon"></i>
+                                Show Recipe Details
+                            </div>
+                            <div className=" active content">
+                                <p><b>Source:</b> {recipeDetails.creditsText}</p>
+                                <p><b>URL:</b> <a href={recipeDetails.sourceUrl}>{recipeDetails.sourceUrl}</a></p>
+                            </div>
+                        </div>
                     {<br/>}
-                    <input
-                        type="text"
-                        name="number"
-                        required
-                        onChange={handleNumberChange}
-                        minLength='10'
-                        maxLength='10'
-                    ></input>
+                    <div className={'inline field'}>
+                        <label>Phone Number:</label>
+                        <input
+                            type="text"
+                            name="number"
+                            required
+                            onChange={handleNumberChange}
+                            minLength='10'
+                            maxLength='10'
+                            placeholder="##########"
+                        ></input>
+                    </div>
                 </Modal.Content>
                 <Modal.Actions id="msgOptions">
                     <button className="ui button positive" type="submit">Send me this</button>

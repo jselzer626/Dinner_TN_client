@@ -97,3 +97,8 @@ div.ui.modal.transition.visible.active {
     display: flex;
     justify-content: space-evenly;
 }
+
+.SMSFormDetails {
+    display: flex;
+    justify-content: space-evenly;
+}
