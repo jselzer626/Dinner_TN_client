@@ -16,7 +16,7 @@ function App() {
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
     const [sendStatus, setSendStatus] = useState({sent:false, success:false, serverError:false})
-    const [showAbout, setShowAbout] = useState(false)
+    const [showDetails, setShowDetails] = useState({showAbout: false, showSource: false})
 
     // need to consolidate these two functions
     const handleInputChange = e => {
@@ -260,16 +260,6 @@ function App() {
                         <Image size='small' src={imageURL}/>
                         <p>You will receive a text containing instructions and ingredients</p>
                     </div>
-                    <div className="ui accordion">
-                            <div className="active title">
-                                <i className="dropdown icon"></i>
-                                Show Recipe Details
-                            </div>
-                            <div className=" active content">
-                                <p><b>Source:</b> {recipeDetails.creditsText}</p>
-                                <p><b>URL:</b> <a href={recipeDetails.sourceUrl}>{recipeDetails.sourceUrl}</a></p>
-                            </div>
-                        </div>
                     {<br/>}
                     <div className={'inline field'}>
                         <label>Phone Number:</label>
@@ -283,6 +273,18 @@ function App() {
                             placeholder="##########"
                         ></input>
                     </div>
+                    <div className="ui accordion">
+                        <div className={showDetails.showSource ? "active title" : "title"}>
+                            <i className="dropdown icon"
+                                onClick={()=> setShowDetails({...showDetails,showSource:!showDetails.showSource})}
+                            ></i>
+                            Show Recipe Details
+                        </div>
+                        <div className = {showDetails.showSource ? "active content" : "content"}>
+                            <p><b>Source:</b> {recipeDetails.creditsText}</p>
+                            <p><b>URL:</b> <a href={recipeDetails.sourceUrl}>{recipeDetails.sourceUrl}</a></p>
+                        </div>
+                    </div>
                 </Modal.Content>
                 <Modal.Actions id="msgOptions">
                     <button className="ui button positive" type="submit">Send me this</button>
@@ -293,12 +295,12 @@ function App() {
         )
     }
 
-    const renderAboutSection = showAbout => {
+    const renderAboutSection = (showDetails) => {
 
         return (
             <Modal
-                open={showAbout}
-                onClose={() => setShowAbout(false)}
+                open={showDetails.showAbout}
+                onClose={() => setShowDetails.showAbout(false)}
             >
                 <Modal.Header>
                     No More Recipe Blogs!
@@ -324,7 +326,7 @@ function App() {
                     Bon Appetit!
                 </Modal.Content>
                 <Modal.Actions>
-                <button className="ui large fluid button negative" onClick={() => setShowAbout(false)}>Take me back</button>
+                <button className="ui large fluid button negative" onClick={() => setShowDetails({...showDetails,showAbout:false})}>Take me back</button>
                 </Modal.Actions>
         
             </Modal>
@@ -337,10 +339,10 @@ function App() {
             {renderInputForm(results)}
             {renderRecipe(results)}
             {sendRecipeSMS(SMSFormOpen)}
-            {renderAboutSection(showAbout)}
+            {renderAboutSection(showDetails)}
             <div className="About">
                 <p>&copy; Jon Selzer 2020</p>
-                <a href="#" onClick={() => setShowAbout(true)}>About</a>
+                <a href="#" onClick={() => setShowDetails({...showDetails,showAbout:true})}>About</a>
             </div>
         </div>
     )

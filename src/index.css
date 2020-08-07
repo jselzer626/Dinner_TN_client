@@ -50,6 +50,8 @@ div.ui.modal.transition.visible.active {
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid gray;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -102,3 +104,4 @@ div.ui.modal.transition.visible.active {
     display: flex;
     justify-content: space-evenly;
 }
+
