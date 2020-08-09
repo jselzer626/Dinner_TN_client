@@ -13,7 +13,7 @@ function App() {
     const [noResults, setNoResults] = useState(false)
     const [SMSFormOpen, setSMSFormOpen] = useState(false)
     const [recipeDetails, setRecipeDetails] = useState({})
-    const [sendStatus, setSendStatus] = useState({sending:false, sent:false, success:false, serverError:false})
+    const [sendStatus, setSendStatus] = useState({sent:false, success:false, serverError:false})
     const [showDetails, setShowDetails] = useState({showAbout: false, showSource: false})
     const [loading, setItemLoading] = useState(false)
 
@@ -40,8 +40,10 @@ function App() {
             let resultsJson = await fetchResults.json()     
             
             // actual recipe recipes are in results key of response object
-            if (resultsJson.results.length === 0) {}
+            if (resultsJson.results.length === 0){
+                console.log('here')
                 setNoResults(true)
+            }
 
             setResults(resultsJson.results)
         } 
@@ -81,7 +83,7 @@ function App() {
          
         e.preventDefault()
 
-        setSendStatus({...sendStatus,sending:true})
+        setItemLoading(true)
 
         // clean up ingredients list
         let ingredientsClean = ''
@@ -103,7 +105,7 @@ function App() {
                 body: SMSForm
             })
 
-            setSendStatus({...sendStatus,sent:true,sending:false})
+            setSendStatus({...sendStatus,sent:true})
             
             let resultsJson = await fetchResults.json() 
 
@@ -111,9 +113,11 @@ function App() {
             if (resultsJson) 
                 setSendStatus({...sendStatus,success:true})
 
+            setItemLoading(false)
 
         } catch(e) {
-            setSendStatus({...sendStatus,serverError:true,sending:false})
+            setSendStatus({...sendStatus,serverError:true})
+            setItemLoading(false)
             console.warn(e)
         }
     }
@@ -228,9 +232,7 @@ function App() {
                     </button>
                 </div>
             </div>
-
         )
-        
     }
 
     const sendRecipeSMS = SMSFormOpen => {
