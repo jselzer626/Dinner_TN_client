@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9e4a80e4a8b934537c9bc983f18cfa1b",
+    "revision": "481081663b0706a7914317a4548d050f",
     "url": "/Dinner_TN_client/index.html"
   },
   {
-    "revision": "7e81ab6cd53169b26d6c",
+    "revision": "1a9ff46a5fa52ee49d74",
     "url": "/Dinner_TN_client/static/css/main.a87e5e52.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7e81ab6cd53169b26d6c",
-    "url": "/Dinner_TN_client/static/js/main.66fb1399.chunk.js"
+    "revision": "1a9ff46a5fa52ee49d74",
+    "url": "/Dinner_TN_client/static/js/main.53d17d95.chunk.js"
   },
   {
     "revision": "da677cff6051494b24fe",
