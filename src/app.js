@@ -33,8 +33,7 @@ function App() {
             let keywords = input.search
             if (!keywords)
                 return 
-            let fetchResults = await fetch(`https://api.spoonacular.com/recipes/search?query=${keywords}&
-            instructionsRequired=true&apiKey=${process.env.REACT_APP_RECIPE_API}&number=100`)
+            let fetchResults = await fetch(`http://localhost:5000/searchRecipes?query=${keywords}`)
             let resultsJson = await fetchResults.json()     
             
             // actual recipe recipes are in results key of response object
@@ -55,8 +54,7 @@ function App() {
 
         try {
 
-            let fetchResults = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?
-            includeNutrition=false&apiKey=${process.env.REACT_APP_RECIPE_API}`)
+            let fetchResults = await fetch(`http://localhost:5000/getRecipeDetails/${recipeId}`)
 
             let resultsJson = await fetchResults.json()
 
