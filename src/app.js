@@ -36,7 +36,7 @@ function App() {
             let keywords = input.search
             if (!keywords)
                 return 
-            let fetchResults = await fetch(`http://localhost:5000/searchRecipes?query=${keywords}`)
+            let fetchResults = await fetch(`https://dinner-tn-server.herokuapp.com/searchRecipes?query=${keywords}`)
             let resultsJson = await fetchResults.json()     
             
             // actual recipe recipes are in results key of response object
@@ -63,7 +63,7 @@ function App() {
 
         try {
 
-            let fetchResults = await fetch(`http://localhost:5000/getRecipeDetails/${recipeId}`)
+            let fetchResults = await fetch(`https://dinner-tn-server.herokuapp.com/getRecipeDetails/${recipeId}`)
 
             let resultsJson = await fetchResults.json()
 
@@ -100,7 +100,7 @@ function App() {
             SMSForm.append('ingredients', ingredientsClean)
             SMSForm.append('recipe', recipeDetails.instructions)
 
-            let fetchResults = await fetch('http://localhost:5000/', {
+            let fetchResults = await fetch('https://dinner-tn-server.herokuapp.com/', {
                 method: 'POST',
                 body: SMSForm
             })
