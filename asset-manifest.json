@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Dinner_TN_client/static/css/main.a87e5e52.chunk.css",
+    "main.js": "/Dinner_TN_client/static/js/main.66fb1399.chunk.js",
+    "main.js.map": "/Dinner_TN_client/static/js/main.66fb1399.chunk.js.map",
+    "runtime-main.js": "/Dinner_TN_client/static/js/runtime-main.badb6503.js",
+    "runtime-main.js.map": "/Dinner_TN_client/static/js/runtime-main.badb6503.js.map",
+    "static/js/2.aab62b93.chunk.js": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js",
+    "static/js/2.aab62b93.chunk.js.map": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js.map",
+    "index.html": "/Dinner_TN_client/index.html",
+    "precache-manifest.1c92efa4fbf8b37c34fdd073430a9ce4.js": "/Dinner_TN_client/precache-manifest.1c92efa4fbf8b37c34fdd073430a9ce4.js",
+    "service-worker.js": "/Dinner_TN_client/service-worker.js",
+    "static/css/main.a87e5e52.chunk.css.map": "/Dinner_TN_client/static/css/main.a87e5e52.chunk.css.map",
+    "static/js/2.aab62b93.chunk.js.LICENSE.txt": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js.LICENSE.txt",
+    "static/media/burger.png": "/Dinner_TN_client/static/media/burger.b794f75d.png",
+    "static/media/crying.png": "/Dinner_TN_client/static/media/crying.9ce318dd.png",
+    "static/media/turkey.png": "/Dinner_TN_client/static/media/turkey.286c3362.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.badb6503.js",
+    "static/js/2.aab62b93.chunk.js",
+    "static/css/main.a87e5e52.chunk.css",
+    "static/js/main.66fb1399.chunk.js"
+  ]
+}
