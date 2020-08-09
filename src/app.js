@@ -15,6 +15,7 @@ function App() {
     const [recipeDetails, setRecipeDetails] = useState({})
     const [sendStatus, setSendStatus] = useState({sending:false, sent:false, success:false, serverError:false})
     const [showDetails, setShowDetails] = useState({showAbout: false, showSource: false})
+    const [loading, setItemLoading] = useState(false)
 
     // need to consolidate these two functions
     const handleInputChange = e => {
@@ -25,10 +26,12 @@ function App() {
         setInput({...input,number:e.currentTarget.value})
     }
 
+
     const handleSubmit = async (e) => {
         
         e.preventDefault()
-
+        setItemLoading(true)
+        
         try {
             let keywords = input.search
             if (!keywords)
@@ -37,20 +40,24 @@ function App() {
             let resultsJson = await fetchResults.json()     
             
             // actual recipe recipes are in results key of response object
-            if (resultsJson.results.length === 0)
+            if (resultsJson.results.length === 0) {}
                 setNoResults(true)
 
             setResults(resultsJson.results)
         } 
         catch(e) {
             console.warn(e)
+            setNoResults(true)
         }
+
+        setItemLoading(false)
 
     }
 
     const handleRecipeSelection = async (e, recipeId) => {
 
         e.preventDefault()
+        setItemLoading(true)
 
         try {
 
@@ -66,6 +73,8 @@ function App() {
         } catch(e) {
             console.warn(e)
         }
+
+        setItemLoading(false)
     }
 
     const handleRecipeSend = async (e) => {
@@ -109,6 +118,27 @@ function App() {
         }
     }
 
+    const renderLoadingGraphic = itemLoading => {
+        
+        if (itemLoading) {
+            return (
+                <Modal
+                    open={itemLoading} 
+                    style={{height: "275px"}}
+                >
+                    <Modal.Header
+                        style={{marginBottom: "50px"}}
+                        >Loading</Modal.Header>
+                    <Modal.Content>
+                        <img 
+                            className="ui image small rotate" 
+                            src={turkey}
+                        />
+                    </Modal.Content>
+                </Modal>
+            )
+        }
+    }
 
     const renderInputForm = results => {
          
@@ -220,21 +250,7 @@ function App() {
             }}>Back</button>
 
             // outcome handling after message send
-            if (sendStatus.sending) {
-                return (
-                    <Modal style={{height: "275px"}}>
-                        <Modal.Header
-                            style={{marginBottom: "50px"}}
-                            >Sending</Modal.Header>
-                        <Modal.Content>
-                            <img 
-                                className="ui image small rotate" 
-                                src={turkey}
-                            />
-                        </Modal.Content>
-                    </Modal>
-                )
-            } else if (sendStatus.success) {
+            if (sendStatus.success) {
                 return (
                     <Modal>
                         <Modal.Header>Success - message sent!</Modal.Header>
@@ -353,6 +369,7 @@ function App() {
             {renderRecipe(results)}
             {sendRecipeSMS(SMSFormOpen)}
             {renderAboutSection(showDetails)}
+            {renderLoadingGraphic(loading)}
             <div className="About">
                 <p>&copy; Jon Selzer 2020</p>
                 <a href="#" onClick={() => setShowDetails({...showDetails,showAbout:true})}>About</a>
