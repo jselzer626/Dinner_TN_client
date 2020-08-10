@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Image } from 'semantic-ui-react'
+import { Modal, Image, Container } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
 import turkey from './images/turkey.png'
@@ -365,18 +365,20 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <h1 className="ui-header mainHeader">Dinner TN</h1>
-            {renderInputForm(results)}
-            {renderRecipe(results)}
-            {sendRecipeSMS(SMSFormOpen)}
-            {renderAboutSection(showDetails)}
-            {renderLoadingGraphic(loading)}
-            <div className="About">
-                <p>&copy; Jon Selzer 2020</p>
-                <a href="#" onClick={() => setShowDetails({...showDetails,showAbout:true})}>About</a>
+            <div className="App ui text container">
+                <h1 className="ui-header mainHeader">Dinner TN</h1>
+                <div className="mainContent">
+                    {renderInputForm(results)}
+                    {renderRecipe(results)}
+                    {sendRecipeSMS(SMSFormOpen)}
+                    {renderAboutSection(showDetails)}
+                    {renderLoadingGraphic(loading)}
+                </div>
+                <div className="About">
+                    <p>&copy; Jon Selzer 2020</p>
+                    <a href="#" onClick={() => setShowDetails({...showDetails,showAbout:true})}>About</a>
+                </div>
             </div>
-        </div>
     )
 
 }
