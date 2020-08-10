@@ -51,7 +51,7 @@ div.ui.modal.transition.visible.active {
     margin-right: 15px;
 }
 
-@media only screen and (max-width: 767px) {
+/*@media only screen and (max-width: 767px) {
     .image {
         padding-right: 35px;
         padding-left: 35px;
@@ -62,7 +62,7 @@ div.ui.modal.transition.visible.active {
         padding-left: 60px;
         padding-right: 60px;
     }
-}
+}*/
 
 .aboutImages {
     display: flex;
