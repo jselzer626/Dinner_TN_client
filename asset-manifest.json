@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/Dinner_TN_client/static/css/main.e62d2a13.chunk.css",
+    "main.css": "/Dinner_TN_client/static/css/main.fa745031.chunk.css",
     "main.js": "/Dinner_TN_client/static/js/main.b42d5bcd.chunk.js",
     "main.js.map": "/Dinner_TN_client/static/js/main.b42d5bcd.chunk.js.map",
     "runtime-main.js": "/Dinner_TN_client/static/js/runtime-main.badb6503.js",
@@ -8,9 +8,9 @@
     "static/js/2.aab62b93.chunk.js": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js",
     "static/js/2.aab62b93.chunk.js.map": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js.map",
     "index.html": "/Dinner_TN_client/index.html",
-    "precache-manifest.d611e4343227a737ea61d362ce1bb6ae.js": "/Dinner_TN_client/precache-manifest.d611e4343227a737ea61d362ce1bb6ae.js",
+    "precache-manifest.4c0f23a3a38b96db1eb0f93a35ff704a.js": "/Dinner_TN_client/precache-manifest.4c0f23a3a38b96db1eb0f93a35ff704a.js",
     "service-worker.js": "/Dinner_TN_client/service-worker.js",
-    "static/css/main.e62d2a13.chunk.css.map": "/Dinner_TN_client/static/css/main.e62d2a13.chunk.css.map",
+    "static/css/main.fa745031.chunk.css.map": "/Dinner_TN_client/static/css/main.fa745031.chunk.css.map",
     "static/js/2.aab62b93.chunk.js.LICENSE.txt": "/Dinner_TN_client/static/js/2.aab62b93.chunk.js.LICENSE.txt",
     "static/media/burger.png": "/Dinner_TN_client/static/media/burger.b794f75d.png",
     "static/media/crying.png": "/Dinner_TN_client/static/media/crying.9ce318dd.png",
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.badb6503.js",
     "static/js/2.aab62b93.chunk.js",
-    "static/css/main.e62d2a13.chunk.css",
+    "static/css/main.fa745031.chunk.css",
     "static/js/main.b42d5bcd.chunk.js"
   ]
 }
