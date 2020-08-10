@@ -288,7 +288,7 @@ function App() {
                 <Modal.Content id="msgSendForm">
                     {<br/>}
                     <div className='SMSFormDetails'>
-                        <Image size='small' src={imageURL}/>
+                        <img className="ui image small" src={imageURL}/>
                         <p>You will receive a text containing instructions and ingredients</p>
                     </div>
                     {<br/>}
