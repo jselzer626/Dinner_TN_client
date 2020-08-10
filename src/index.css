@@ -118,3 +118,7 @@ div.ui.modal.transition.visible.active {
 .mainContent {
     padding-bottom: 3.5rem;
 }
+
+.container {
+    box-sizing: border-box;
+}
