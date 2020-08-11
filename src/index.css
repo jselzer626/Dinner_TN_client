@@ -7,7 +7,6 @@ input {
 }
 
 .mainHeader {
-    border-bottom: 1px solid lightgray;
     padding: 20px;
     background-color: darkslategray;
     color: white;
@@ -50,23 +49,14 @@ div.ui.modal.transition.visible.active {
     margin-right: 15px;
 }
 
-/*@media only screen and (max-width: 767px) {
-    .image {
-        padding-right: 35px;
-        padding-left: 35px;
-    }
+.startImg {
+    padding-top: 10px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
 
-    .startImg {
-        padding-top: 10px;
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-}*/
-
-.aboutImages {
-    display: flex;
-    justify-content: space-evenly;
-    height: 100px;
+.smsImage {
+   max-height: 75px; 
 }
 
 .About {
@@ -120,4 +110,10 @@ div.ui.modal.transition.visible.active {
 
 .container {
     box-sizing: border-box;
+}
+
+.ui.modal > .header:not(.loadingGraphic) {
+    border-bottom: 4px solid silver;
+    background-color: darkslategray;
+    color: white;
 }
