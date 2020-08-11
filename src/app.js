@@ -174,22 +174,22 @@ function App() {
     const renderRecipe = results => {
         
         let currentRecipe = results[resultIndex] ? results[resultIndex] : null
-        // first checking if search returned no results
+        // first checking if search returned no results or results have been exhausted
         if (!currentRecipe && noResults) {
             return (
-
                 <div className="ui-container">
                         <h1 className="ui header">Oops!</h1>
                         <img className="ui image fluid" src={crying}></img>
                         <h2>No recipes matching "{input.search}"</h2>
                         <button 
                             className={'massive fluid orange ui button'}
-                            onClick={() => setNoResults(false)}
-                            >
-                                Try something else!</button>
+                            onClick={() => {
+                                setResults([])
+                                setNoResults(false)}
+                            }>
+                            Try something else!</button>
 
                 </div>
-
             )}
         // then checking if application just loaded (i.e. noResults is still false)
         else if (!currentRecipe) {
@@ -215,10 +215,13 @@ function App() {
                     className={'massive fluid negative ui button'}
                     onClick={() => {
 
-                        let newIndex = resultIndex
-                        setResultIndex(newIndex += 1)}
+                        let newIndex = resultIndex + 1
+                        setResultIndex(newIndex)
+                        if ((newIndex + 1) > results.length) {
+                            setNoResults(true)
+                        }
 
-                    }
+                    }}
                 >Show me another</button>
                 <div className="newSearch">
                     <p>You searched: <b>{input.search}</b></p>

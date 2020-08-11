@@ -2,6 +2,10 @@
     text-align: center;
 }
 
+.modal {
+    max-width: 400px;
+}
+
 input {
     text-align: center;
 }
