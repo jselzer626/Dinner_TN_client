@@ -1,3 +1,6 @@
+body {
+    background-color: gainsboro;
+}
 .App {
     text-align: center;
 }
@@ -8,6 +11,10 @@
 
 input {
     text-align: center;
+}
+
+.ui.raised.segment {
+    padding: 0px;
 }
 
 .mainHeader {
@@ -57,6 +64,15 @@ div.ui.modal.transition.visible.active {
     padding-top: 10px;
     padding-left: 60px;
     padding-right: 60px;
+}
+
+@media screen and (min-width: 600px) {
+    .startImg {
+        padding-top: 50px;
+        padding-left: 150px;
+        padding-right: 150px;
+        padding-bottom: 50px;
+    }
 }
 
 .smsImage {
@@ -110,6 +126,8 @@ div.ui.modal.transition.visible.active {
 
 .mainContent {
     padding-bottom: 3.5rem;
+    padding-right: 2vw;
+    padding-left: 2vw;
 }
 
 .container {

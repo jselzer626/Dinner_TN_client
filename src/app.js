@@ -3,6 +3,7 @@ import { Modal, Image, Container } from 'semantic-ui-react'
 import burger from './images/burger.png'
 import crying from './images/crying.png'
 import turkey from './images/turkey.png'
+import loading_spinner from './images/Loading_Spinner.gif'
 import success_check from './images/success_check.png'
 
 function App() {
@@ -128,15 +129,12 @@ function App() {
             return (
                 <Modal
                     open={itemLoading} 
-                    style={{height: "275px"}}
                 >
                     <Modal.Header
-                        style={{marginBottom: "50px"}}
                         >Loading</Modal.Header>
                     <Modal.Content>
                         <img 
-                            className="ui image small rotate" 
-                            src={turkey}
+                            src={loading_spinner}
                         />
                     </Modal.Content>
                 </Modal>
@@ -150,10 +148,10 @@ function App() {
              return (
                 <form className={'ui form'} onSubmit={handleSubmit}>
 
-             <h3>Find a recipe. Get it texted to you.{<br/>}No ads. No blogs. No stress.</h3>
+             <h2>Find a recipe. Get it texted to you.{<br/>}No ads. No blogs. No stress.</h2>
                     <div className={'field'}>
                         <img className="ui image fluid startImg" src={burger}></img>
-                        <h2>What are you in the mood for?</h2>
+                        <h1>What are you in the mood for?</h1>
                         <input 
                             type='text' 
                             name='recipe_keywords' 
@@ -260,8 +258,9 @@ function App() {
                     <Modal>
                         <Modal.Header>Success - message sent!</Modal.Header>
                         <Modal.Content>
-                            <Image src={success_check} size="small"></Image>
-                            <p>Bon Appetit!</p>
+                            <i className="check circle icon green massive fluid"></i>
+                            {<br/>}{<br/>}
+                            <h2>Bon Appetit!</h2>
                         </Modal.Content>
                         <Modal.Actions>
                             {resetButton}
@@ -369,17 +368,19 @@ function App() {
 
     return (
             <div className="App ui text container">
-                <h1 className="ui-header mainHeader">Dinner TN</h1>
-                <div className="mainContent">
-                    {renderInputForm(results)}
-                    {renderRecipe(results)}
-                    {sendRecipeSMS(SMSFormOpen)}
-                    {renderAboutSection(showDetails)}
-                    {renderLoadingGraphic(loading)}
-                </div>
-                <div className="About">
-                    <p>&copy; Jon Selzer 2020</p>
-                    <a href="#" onClick={() => setShowDetails({...showDetails,showAbout:true})}>About</a>
+                <div className="ui raised segment">
+                    <h1 className="ui-header mainHeader">Dinner TN</h1>
+                    <div className="mainContent">
+                        {renderInputForm(results)}
+                        {renderRecipe(results)}
+                        {sendRecipeSMS(SMSFormOpen)}
+                        {renderAboutSection(showDetails)}
+                        {renderLoadingGraphic(loading)}
+                    </div>
+                    <div className="About">
+                        <p>&copy; Jon Selzer 2020</p>
+                        <a href="#" onClick={() => setShowDetails({...showDetails,showAbout:true})}>About</a>
+                    </div>
                 </div>
             </div>
     )
