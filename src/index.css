@@ -25,6 +25,7 @@ input {
     border-bottom: 4px solid silver;
     align-items: center;
     justify-content: center;
+    margin-bottom: 0px;
 }
 
 .headerImg {
@@ -61,17 +62,46 @@ div.ui.modal.transition.visible.active {
 }
 
 .startImg {
-    padding-top: 10px;
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-top: 3vh;
+    padding-left: 15vw;
+    padding-right: 15vw;
+    padding-bottom: 3vh;
+    border-bottom: 1px solid gainsboro;
+    border-top: 1px solid gainsboro;
 }
 
+div.mainContent.ui.raised.segment {
+    margin-top: 0px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+}
+
+#mainRecipeImg {
+    padding: 4vh;
+}
+
+/**desktop screen*/
 @media screen and (min-width: 600px) {
     .startImg {
         padding-top: 50px;
         padding-left: 150px;
         padding-right: 150px;
         padding-bottom: 50px;
+    }
+}
+
+/**mobile screen */
+@media screen and (max-width: 600px) {
+    #inputFormHeader {
+        padding-top: 1vh;
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+    }
+    div.mainContent.ui.raised.segment {
+        padding: 1rem;
+    }
+    #mainRecipeImg {
+        padding: 1vh;
     }
 }
 
@@ -108,26 +138,6 @@ div.ui.modal.transition.visible.active {
 .SMSFormDetails {
     display: flex;
     justify-content: space-evenly;
-}
-
-/*for loading image*/
-.rotate {
-    animation: rotation 2s infinite linear;
-}
-
-@keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
-  }
-
-.mainContent {
-    padding-bottom: 3.5rem;
-    padding-right: 2vw;
-    padding-left: 2vw;
 }
 
 .container {

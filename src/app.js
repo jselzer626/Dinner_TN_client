@@ -148,7 +148,9 @@ function App() {
              return (
                 <form className={'ui form'} onSubmit={handleSubmit}>
 
-             <h2>Find a recipe. Get it texted to you.{<br/>}No ads. No blogs. No stress.</h2>
+             <h2
+             id="inputFormHeader"
+             >Find a recipe. Get it texted to you.{<br/>}No ads. No blogs. No stress.</h2>
                     <div className={'field'}>
                         <img className="ui image fluid startImg" src={burger}></img>
                         <h1>What are you in the mood for?</h1>
@@ -197,8 +199,12 @@ function App() {
         return (
 
             <div className="ui-container">
-                <h2>{currentRecipe.title}</h2>
-                <img className={"ui image fluid"} src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
+                <h2
+                style={{"padding-bottom": "1vh"}}
+                >{currentRecipe.title}</h2>
+                <img className={"ui image fluid raised segment"} 
+                id="mainRecipeImg"
+                src={`https://spoonacular.com/recipeImages/${currentRecipe.id}-312x231.jpg`}></img>
                 {<br/>}
                 <button 
                     className={'massive fluid positive ui button'}
@@ -367,10 +373,10 @@ function App() {
     }
 
     return (
-            <div className="App ui text container">
-                <div className="ui raised segment">
-                    <h1 className="ui-header mainHeader">Dinner TN</h1>
-                    <div className="mainContent">
+            <div>
+                <h1 className="ui-header mainHeader">Dinner TN</h1>
+                <div className="App ui text container">
+                    <div className="mainContent ui raised segment">
                         {renderInputForm(results)}
                         {renderRecipe(results)}
                         {sendRecipeSMS(SMSFormOpen)}
