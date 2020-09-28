@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6e8d46fe3b5acf2998cca461494e36d2",
+    "revision": "26ffb6c6bdea2a9803898fbbf843b6cf",
     "url": "/Dinner_TN_client/index.html"
   },
   {
