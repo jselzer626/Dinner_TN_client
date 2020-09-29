@@ -74,6 +74,7 @@ div.mainContent.ui.raised.segment {
     margin-top: 0px;
     padding: 2rem;
     margin-bottom: 3rem;
+    min-height: 80vh;
 }
 
 #mainRecipeImg {
