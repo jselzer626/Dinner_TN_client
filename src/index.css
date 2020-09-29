@@ -84,10 +84,11 @@ div.mainContent.ui.raised.segment {
 
 div.mainContent.ui.raised.segment h1 {
     font-size: 2.5rem;
+    margin-bottom: 3vh;
 }
 
 div.mainContent.ui.raised.segment input {
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
     min-height: 4vh;
 }
 #mainRecipeImg {
@@ -117,6 +118,7 @@ div.mainContent.ui.raised.segment input {
     }
     div.mainContent.ui.raised.segment h1 {
         font-size: 2rem;
+        margin-bottom: 1rem;
     }
     div.mainContent.ui.raised.segment input {
         margin-bottom: 0px;
