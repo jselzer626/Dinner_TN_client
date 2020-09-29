@@ -77,6 +77,19 @@ div.mainContent.ui.raised.segment {
     min-height: 80vh;
 }
 
+#inputFormHeader {
+    font-size: 2rem;
+    margin-bottom: 3vh;
+}
+
+div.mainContent.ui.raised.segment h1 {
+    font-size: 2.5rem;
+}
+
+div.mainContent.ui.raised.segment input {
+    margin-bottom: 3vh;
+    min-height: 4vh;
+}
 #mainRecipeImg {
     padding: 4vh;
 }
@@ -100,6 +113,13 @@ div.mainContent.ui.raised.segment {
     }
     div.mainContent.ui.raised.segment {
         padding: 1rem;
+        min-height: 70vh;
+    }
+    div.mainContent.ui.raised.segment h1 {
+        font-size: 2rem;
+    }
+    div.mainContent.ui.raised.segment input {
+        margin-bottom: 0px;
     }
     #mainRecipeImg {
         padding: 1vh;
